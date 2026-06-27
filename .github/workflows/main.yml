@@ -21,11 +21,11 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      # تم إجبار جيت هاب هنا على استخدام إصدار 8.5 المتوافق مع القالب
+      # تم التحديث إلى إصدار 8.13 ليطابق متطلبات إضافات المشروع تماماً
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.5'
+          gradle-version: '8.13'
 
       - name: Build APK with Gradle
         run: gradle assembleDebug --stacktrace
