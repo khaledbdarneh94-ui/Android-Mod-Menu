@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch: # يتيح لك هذا الخيار تشغيل البناء يدوياً في أي وقت
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,13 +20,14 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-          cache: 'gradle'
 
-      - name: Grant Execute Permission for Gradlew
-        run: chmod +x gradlew
+      # تم استبدال الـ wrapper التقليدي بأداة جيت هاب الرسمية لإعداد Gradle
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
 
+      # البناء باستخدام أداة Gradle العامة مباشرة لتفادي الملف المفقود
       - name: Build APK with Gradle
-        run: ./gradlew assembleDebug --stacktrace
+        run: gradle assembleDebug --stacktrace
 
       - name: Upload Compiled APK
         uses: actions/upload-artifact@v4
